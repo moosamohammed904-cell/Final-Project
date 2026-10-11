@@ -55,8 +55,8 @@ const App = () => {
 
     try {
       const [incomeRes, expenseRes] = await Promise.all([
-        axios.get(`${API_URL}/income`, { headers }).catch(() => ({ data: { data: [] } })),
-        axios.get(`${API_URL}/expense`, { headers }).catch(() => ({ data: { data: [] } }))
+        axios.get(`${API_URL}/income/get`, { headers }).catch(() => ({ data: { data: [] } })),
+        axios.get(`${API_URL}/expense/get`, { headers }).catch(() => ({ data: { data: [] } }))
       ]);
 
       const incomeList = (incomeRes.data?.data || incomeRes.data || []).map(item => ({

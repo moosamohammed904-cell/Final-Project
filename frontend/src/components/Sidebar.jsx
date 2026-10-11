@@ -13,7 +13,7 @@ const MENU_ITEMS = [
   { text: "Profile", path: "/profile", icon: <User size={20} /> },
 ];
 
-const Sidebar = ({ user, isCollapsed, setSidebarCollapsed: setIsCollapsed }) => {
+const Sidebar = ({ user, isCollapsed, setSidebarCollapsed: setIsCollapsed, onLogout }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
@@ -45,6 +45,10 @@ const Sidebar = ({ user, isCollapsed, setSidebarCollapsed: setIsCollapsed }) => 
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    onLogout?.();
     navigate("/login");
   };
 
@@ -90,17 +94,6 @@ const Sidebar = ({ user, isCollapsed, setSidebarCollapsed: setIsCollapsed }) => 
         animate={{ x: 0, opacity: 1, width: isCollapsed ? 80 : 256 }}
         transition={{ type: "spring", damping: 25 }}
       >
-        {/* Toggle Collapse Arrow Button */}
-        <button
-          onClick={toggleSidebar}
-          className={cn(
-            sidebarStyles.toggleButton?.base ||
-            "absolute -right-3.5 top-6 z-50 flex items-center justify-center w-7 h-7 bg-white border border-gray-200 rounded-full shadow-md text-gray-600 hover:text-teal-600 transition-colors"
-          )}
-          aria-label="Toggle Sidebar"
-        >
-          {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-        </button>
 
         <div className="flex flex-col h-full p-4 justify-between">
           {/* Top Section */}
@@ -147,10 +140,7 @@ const Sidebar = ({ user, isCollapsed, setSidebarCollapsed: setIsCollapsed }) => 
                 )}
               </div>
 
-              {/* Dropdown Arrow */}
-              {!isCollapsed && (
-                <ChevronDown className="w-4 h-4 text-gray-400 flex-shrink-0 ml-2" />
-              )}
+
             </div>
 
             {/* Menu Items */}
@@ -262,7 +252,6 @@ const Sidebar = ({ user, isCollapsed, setSidebarCollapsed: setIsCollapsed }) => 
                       </div>
                       
                       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px', flexShrink: 0, marginLeft: '8px' }}>
-                        <ChevronDown className="w-4 h-4 text-gray-400" />
                         <button 
                           onClick={() => setMobileOpen(false)} 
                           className={sidebarStyles.mobileCloseButton || "p-1 rounded-lg hover:bg-gray-100"}

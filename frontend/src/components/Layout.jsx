@@ -85,7 +85,7 @@ const Layout = ({ onLogout, user }) => {
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       console.log("Using token for request:", token);
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
@@ -130,7 +130,7 @@ const Layout = ({ onLogout, user }) => {
   // Add transaction
   const addTransaction = async (transaction) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const endpoint =
         transaction.type === "income" ? "income/add" : "expense/add";
@@ -149,7 +149,7 @@ const Layout = ({ onLogout, user }) => {
   // Edit transaction
   const editTransaction = async (id, transaction) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const endpoint =
         transaction.type === "income" ? "income/update" : "expense/update";
@@ -170,7 +170,7 @@ const Layout = ({ onLogout, user }) => {
   // Delete transaction
   const deleteTransaction = async (id, type) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const endpoint = type === "income" ? "income/delete" : "expense/delete";
       await axios.delete(`${API_BASE}/${endpoint}/${id}`, { headers });
@@ -317,6 +317,7 @@ const Layout = ({ onLogout, user }) => {
           user={user} 
           isCollapsed={sidebarCollapsed} 
           setSidebarCollapsed={setSidebarCollapsed} 
+          onLogout={onLogout}
         />
         
         <main className={styles?.Layout?.mainContainer ? styles.Layout.mainContainer(sidebarCollapsed) : "flex-1 p-6"}>

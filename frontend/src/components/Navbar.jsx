@@ -12,16 +12,22 @@ const Navbar = ({ user: propUser, onLogout }) => {
   const menuRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const user = propUser || {
-    name:"",
-    email:"",
-  };
+  const [user, setUser] = useState(propUser || {
+    name: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    if (propUser) {
+      setUser(propUser);
+    }
+  }, [propUser]);
    
   //// to fetch the user data from server
- useEffect(() => {
+  useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
         if (!token) return;
 
         const response = await axios.get(`${BASE_URL}/user/me`, {

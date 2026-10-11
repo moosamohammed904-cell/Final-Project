@@ -206,7 +206,7 @@ const Dashboard = () => {
       setLoading(true);
       const res = await axios.get(`${API_BASE}/dashboard`, { headers: getAuthHeader() });
       if (res?.data?.success) {
-        const data = res.data;
+        const data = res.data?.data || res.data;
         setOverviewMeta((prev) => ({
           ...prev,
           monthlyIncome: Number(data.monthlyIncome || 0),
