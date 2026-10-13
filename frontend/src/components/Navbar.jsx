@@ -5,7 +5,7 @@ import img1 from '../assets/logo.png';
 import { ChevronDown, LogOut, User } from 'lucide-react'; // Fixed: Added User import
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000/api'
+const BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 const Navbar = ({ user: propUser, onLogout }) => {
   const navigate = useNavigate();

@@ -9,7 +9,7 @@ import Signup from './components/Signup';
 import Expense from './pages/Expense';
 import Profile from './pages/Profile'; 
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 // Protected Route wrapper component
 const ProtectedRoute = ({ user, token, children }) => {

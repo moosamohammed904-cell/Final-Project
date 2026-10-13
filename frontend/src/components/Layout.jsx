@@ -26,7 +26,7 @@ import {
   PieChart
 } from 'lucide-react';
 
-const API_BASE = import.meta.env.DEV? 'http://localhost:4000/api' : '/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 const CATEGORY_ICONS = {
   Food: <Utensils className="w-4 h-4" />,
